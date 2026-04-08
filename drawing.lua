@@ -185,11 +185,7 @@ end
 LEGEND = ""
 
 function loadLegend()
-  local f = io.open("legend.txt", "r")
-  if f then
-    LEGEND = f:read("*a")
-    f:close()
-  end
+  LEGEND = readfile("legend.txt") or ""
 end
 
 function drawLegend()
