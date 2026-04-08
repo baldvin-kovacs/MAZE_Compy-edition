@@ -37,9 +37,9 @@ turtle = {
   col = 1,
   row = 1,
   dir = "N",
-  queue = {},
+  queue = { },
   anim = nil,
-  traces = {},
+  traces = { },
   color = nil,
 }
 
@@ -47,9 +47,9 @@ function turtleReset(col, row, dir)
   turtle.col = col
   turtle.row = row
   turtle.dir = dir
-  turtle.queue = {}
+  turtle.queue = { }
   turtle.anim = nil
-  turtle.traces = {}
+  turtle.traces = { }
   turtle.color = nil
 end
 

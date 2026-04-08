@@ -16,7 +16,7 @@ sfx = compy.audio
 GS = {
   init = false,
   grid = nil,
-  goals = {},
+  goals = { },
   level = 1,
 }
 
@@ -34,7 +34,7 @@ end
 
 function parseMaze(level_data)
   GS.grid = level_data
-  GS.goals = {}
+  GS.goals = { }
   for r, row in ipairs(level_data) do
     for c = 1, #row do
       parseCell(row:sub(c, c), c, r)

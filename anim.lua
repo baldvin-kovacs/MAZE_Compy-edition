@@ -52,7 +52,7 @@ end
 
 -- Animation finishers
 
-ANIM_FINISHERS = {}
+ANIM_FINISHERS = { }
 
 function ANIM_FINISHERS.turn(a)
   turtle.dir = a.target_dir
