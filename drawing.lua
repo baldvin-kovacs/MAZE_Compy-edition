@@ -49,9 +49,8 @@ end
 
 function drawActiveTrace()
   local a = turtle.anim
-  if not a or a.kind ~= "move" then
-    return
-  end
+  if not a or a.kind ~= "move" then return end
+  if a.no_trail then return end
   local x1, y1 = cellCenter(a.from_col, a.from_row)
   local x2, y2 = currentPos()
   gfx.line(x1, y1, x2, y2)
@@ -163,9 +162,10 @@ end
 
 function currentAngle()
   local a = turtle.anim
-  if a and a.kind == "move" then
-    local dir = a.move_dir
-    return lerpAngle(a.from_dir, dir, animProgress())
+  if a and a.kind == "turn" then
+    return lerpAngle(a.from_dir, a.target_dir, animProgress())
+  elseif a and a.kind == "move" then
+    return lerpAngle(a.from_dir, a.move_dir, animProgress())
   end
   return DIR_ANGLES[turtle.dir]
 end

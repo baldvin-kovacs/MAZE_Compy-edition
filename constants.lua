@@ -4,6 +4,7 @@
 
 ANIM = {
   move_time = 0.5,
+  turn_time = 0.3,
   bump_frac = 0.3,
   fail_pause = 0.5,
   win_time = 0.5,
