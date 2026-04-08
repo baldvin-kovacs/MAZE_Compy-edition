@@ -18,6 +18,7 @@ GS = {
   grid = nil,
   goals = { },
   level = 1,
+  won = false,
 }
 
 -- Parse a maze string-grid for turtle start and goals
@@ -47,6 +48,7 @@ end
 function resetLevel()
   parseMaze(LEVELS[GS.level])
   initGrid(#GS.grid, #(GS.grid[1]))
+  GS.won = false
 end
 
 function nextLevel()
@@ -69,7 +71,9 @@ function checkGoal()
   end
 end
 
-ANIM_FINISHERS.win = nextLevel
+ANIM_FINISHERS.win = function()
+  GS.won = true
+end
 
 function ensureInit()
   if not GS.init then
@@ -95,8 +99,15 @@ end
 
 function love.keypressed(k)
   if k == "escape" then
+    GS.won = false
     resetLevel()
-  elseif processKey(k) then
+    return
+  end
+  if GS.won then
+    if k == "space" then nextLevel() end
+    return
+  end
+  if processKey(k) then
     sfx.ping()
   end
 end

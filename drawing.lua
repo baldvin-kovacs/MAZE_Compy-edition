@@ -196,7 +196,17 @@ function drawLegend()
   local _, n = LEGEND:gsub("\n", "")
   local th = fh * (n + 1)
   gfx.setColor(0.3, 0.3, 0.3, 0.5)
-  gfx.print(LEGEND, w - font:getWidth(LEGEND) - fh, h - th - fh)
+  gfx.print(LEGEND, w - font:getWidth(LEGEND) - fh, h - th - 2*fh)
+end
+
+-- Win prompt
+
+function drawWinPrompt()
+  if not GS.won then return end
+  local w, h = gfx.getDimensions()
+  gfx.setColor(0.3, 0.3, 0.3, 0.5)
+  local msg = "Press Space for next level!"
+  gfx.print(msg, 12, h - 50)
 end
 
 -- Draw the complete scene
@@ -211,4 +221,5 @@ function drawScene()
   drawTurtleAt(x, y, angle, GRID.scale)
   drawLevelIndicator()
   drawLegend()
+  drawWinPrompt()
 end

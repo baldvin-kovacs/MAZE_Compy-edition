@@ -1,3 +1,4 @@
   N
 W + E L:↺ R:↻
   S   F:↑ B:↓
+      Esc: reset
