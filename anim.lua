@@ -61,7 +61,9 @@ end
 function ANIM_FINISHERS.move(a)
   turtle.col = a.target_col
   turtle.row = a.target_row
-  turtle.dir = a.move_dir
+  if not a.no_trail then
+    turtle.dir = a.move_dir
+  end
   if not a.no_trail then
     table.insert(turtle.traces, {
       c1 = a.from_col, r1 = a.from_row,
