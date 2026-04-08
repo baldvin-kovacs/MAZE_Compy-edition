@@ -73,6 +73,7 @@ ANIM_FINISHERS.win = nextLevel
 
 function ensureInit()
   if not GS.init then
+    loadLegend()
     resetLevel()
     GS.init = true
   end

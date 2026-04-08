@@ -57,13 +57,14 @@ function drawActiveTrace()
 end
 
 function drawTraces()
-  local w = TURTLE.head_r * GRID.scale * 2
   gfx.setColor(Color[Color.cyan])
-  gfx.setLineWidth(w)
+  gfx.setLineWidth(GRID.trace_r * 2)
   for _, t in ipairs(turtle.traces) do
     local x1, y1 = cellCenter(t.c1, t.r1)
     local x2, y2 = cellCenter(t.c2, t.r2)
     gfx.line(x1, y1, x2, y2)
+    gfx.circle("fill", x1, y1, GRID.trace_r)
+    gfx.circle("fill", x2, y2, GRID.trace_r)
   end
   drawActiveTrace()
   gfx.setLineWidth(1)
@@ -179,6 +180,29 @@ function drawLevelIndicator()
   gfx.print(text, 6, 4)
 end
 
+-- Legend in the bottom-right corner
+
+LEGEND = ""
+
+function loadLegend()
+  local f = io.open("legend.txt", "r")
+  if f then
+    LEGEND = f:read("*a")
+    f:close()
+  end
+end
+
+function drawLegend()
+  if LEGEND == "" then return end
+  local w, h = gfx.getDimensions()
+  local font = gfx.getFont()
+  local fh = font:getHeight()
+  local _, n = LEGEND:gsub("\n", "")
+  local th = fh * (n + 1)
+  gfx.setColor(0.3, 0.3, 0.3, 0.5)
+  gfx.print(LEGEND, w - font:getWidth(LEGEND) - fh, h - th - fh)
+end
+
 -- Draw the complete scene
 
 function drawScene()
@@ -190,4 +214,5 @@ function drawScene()
   local angle = currentAngle()
   drawTurtleAt(x, y, angle, GRID.scale)
   drawLevelIndicator()
+  drawLegend()
 end

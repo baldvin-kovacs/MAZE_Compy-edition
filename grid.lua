@@ -9,6 +9,7 @@ GRID = {
   cols = 0,
   scale = 0,
   bump_dist = 0,
+  trace_r = 0,
 }
 
 function initGrid(rows, cols)
@@ -22,6 +23,7 @@ function initGrid(rows, cols)
   GRID.scale = GRID.cell / (TURTLE.body_yr * ff)
   local full = TURTLE.body_yr + TURTLE.head_r
   GRID.bump_dist = GRID.cell / 2 - full * GRID.scale
+  GRID.trace_r = TURTLE.head_r * GRID.scale
 end
 
 function cellTopLeft(col, row)
