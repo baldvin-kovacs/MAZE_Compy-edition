@@ -1,67 +1,23 @@
 -- turtle.lua
+-- Turtle state and absolute direction tables.
 
--- Compass directions
+-- Movement deltas for each compass direction
 
--- How each direction moves on the grid
-
-DIR_DELTA = { }
-DIR_DELTA.N = {
-  x = 0,
-  y = -1
-}
-DIR_DELTA.S = {
-  x = 0,
-  y = 1
-}
-DIR_DELTA.W = {
-  x = -1,
-  y = 0
-}
-DIR_DELTA.E = {
-  x = 1,
-  y = 0
+DIR_DELTA = {
+  N = { x = 0, y = -1 },
+  S = { x = 0, y = 1 },
+  W = { x = -1, y = 0 },
+  E = { x = 1, y = 0 },
 }
 
--- N <-> S, E <-> W
+-- Angle for each compass direction (for drawing)
 
-OPPOSITE_DIR = {
-  N = "S",
-  S = "N",
-  E = "W",
-  W = "E"
+DIR_ANGLES = {
+  N = 0,
+  E = math.pi / 2,
+  S = math.pi,
+  W = -math.pi / 2,
 }
-
--- N -> E -> S -> W (clockwise)
-
-TURN_RIGHT = {
-  N = "E",
-  E = "S",
-  S = "W",
-  W = "N"
-}
-
--- N -> W -> S -> E (counter-clockwise)
-
-TURN_LEFT = {
-  N = "W",
-  W = "S",
-  S = "E",
-  E = "N"
-}
-
--- Turn an absolute command into relative ones.
-
-function compile_absolute(target, facing)
-  if target == facing then
-    return "F"
-  elseif target == OPPOSITE_DIR[facing] then
-    return "B"
-  elseif target == TURN_RIGHT[facing] then
-    return "R"
-  else
-    return "L"
-  end
-end
 
 -- Turtle state
 
@@ -69,65 +25,52 @@ turtle = {
   col = 1,
   row = 1,
   dir = "N",
-  queue = { },
+  queue = {},
   anim = nil,
-  traces = { },
-  color = nil
+  traces = {},
+  color = nil,
 }
 
-function turtle_reset(col, row, dir)
+function turtleReset(col, row, dir)
   turtle.col = col
   turtle.row = row
   turtle.dir = dir
-  turtle.queue = { }
+  turtle.queue = {}
   turtle.anim = nil
-  turtle.traces = { }
+  turtle.traces = {}
   turtle.color = nil
 end
 
--- Command queue
+-- Accept a direction keypress into the queue
 
-function process_key(k)
+function processKey(k)
   local cmd = string.upper(k)
-  if DIR_DELTA[cmd]
-       or cmd == "L"
-       or cmd == "R"
-       or cmd == "F"
-       or cmd == "B"
-  then
+  if DIR_DELTA[cmd] then
     table.insert(turtle.queue, cmd)
     return true
   end
   return false
 end
 
--- Dequeue the next relative command
+-- Pop next command (absolute direction) from queue
 
 function dequeue()
-  local cmd = table.remove(turtle.queue, 1)
-  if not DIR_DELTA[cmd] then
-    return cmd
-  end
-  local rel = compile_absolute(cmd, turtle.dir)
-  if rel == "R" or rel == "L" then
-    table.insert(turtle.queue, 1, "F")
-  end
-  return rel
+  return table.remove(turtle.queue, 1)
 end
 
 -- Animation state
 
-function start_anim(kind, duration)
+function startAnim(kind, duration)
   turtle.anim = {
     kind = kind,
     time = 0,
     duration = duration,
     from_col = turtle.col,
     from_row = turtle.row,
-    from_dir = turtle.dir
+    from_dir = turtle.dir,
   }
 end
 
-function anim_progress()
+function animProgress()
   return turtle.anim.time / turtle.anim.duration
 end

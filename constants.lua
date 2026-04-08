@@ -3,14 +3,14 @@
 -- Animation durations in seconds
 
 ANIM = {
-  move_time = 1,
-  turn_time = 1,
-  bump_frac = 0.5,
+  move_time = 0.5,
+  bump_frac = 0.3,
   fail_pause = 0.5,
-  win_time = 0.5
+  win_time = 0.5,
+  goal_pulse = 1.5,
 }
 
--- Turtle drawing sizes 
+-- Turtle drawing sizes
 
 TURTLE = {
   head_r = 8,
@@ -20,5 +20,5 @@ TURTLE = {
   body_yr = 20,
   neck = 5,
   leg_angle = math.pi / 4,
-  fit_factor = 5
+  fit_factor = 5,
 }
