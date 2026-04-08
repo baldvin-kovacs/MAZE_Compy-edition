@@ -165,7 +165,7 @@ function currentAngle()
   local a = turtle.anim
   if a and a.kind == "turn" then
     return lerpAngle(a.from_dir, a.target_dir, animProgress())
-  elseif a and a.kind == "move" then
+  elseif a and a.kind == "move" and not a.no_trail then
     return lerpAngle(a.from_dir, a.move_dir, animProgress())
   end
   return DIR_ANGLES[turtle.dir]
